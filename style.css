@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  margin: 20px;
+  position: relative;
+  background: red;
+  width: 180px;
+}
+
+.tile {
+  height: 60px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  background: white;
+  display: grid;
+  align-items: center;
+  text-align: center;
+}
+
+.tile:nth-of-type(9),
+.tile:nth-of-type(6),
+.tile:nth-of-type(3) {
+  border-right: 0px;
+}
+
+.tile:nth-of-type(9),
+.tile:nth-of-type(8),
+.tile:nth-of-type(7) {
+  border-bottom: 0px;
+}
+
+.cross .fa,
+.nought .fa {
+  font-size: 40px;
+}
+
+hr {
+  position: absolute;
+  background: black;
+  width: 97%;
+  border: none;
+  border-top: 2px solid #000;
+}
+#hr-0 {
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#hr-1 {
+  transform: rotate(90deg);
+  top: 50%;
+  left: 35%;
+}
+#hr-2 {
+  top: 83%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#hr-3 {
+  transform: rotate(90deg);
+  top: 50%;
+  left: -32%;
+}
+#hr-4 {
+  transform: rotate(45deg);
+  top: 50%;
+  left: 0%;
+}
+#hr-5 {
+  transform: rotate(-45deg);
+  top: 50%;
+  left: 0%;
+}
+#hr-6 {
+  transform: rotate(90deg);
+  top: 50%;
+  left: 1%;
+}
+#hr-7 {
+  top: 49%;
+}
