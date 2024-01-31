@@ -1,18 +1,26 @@
+const game = {
+  tileId: 1,
+  noughtIds: [],
+  crossIds: [],
+  gameActive: true,
+  clickCount: 0,
+  winCount: 0,
+  lossCount: 0,
+};
+
 const tiles = document.querySelectorAll(".tile");
 const cross = '<div class="cross"><i class="fa fa-solid fa-x"></i></div>';
 const nought = '<div class="nought"><i class="fa fa-solid fa-o"></i></div>';
-let tileId = 1;
-let gameActive = true;
 
 function newGame() {
   tiles.forEach((tile) => {
     tile.innerHTML = "";
   });
 
-  tileId = 1;
-  noughtIds = [];
-  crossIds = [];
-  gameActive = true;
+  game.tileId = 1;
+  game.noughtIds = [];
+  game.crossIds = [];
+  game.gameActive = true;
 
   const hrElements = document.querySelectorAll("hr");
 
@@ -22,36 +30,39 @@ function newGame() {
 }
 
 tiles.forEach((tile) => {
-  tile.id = "tile-" + tileId;
-  tileId++;
+  tile.id = "tile-" + game.tileId;
+  game.tileId++;
 
-  tile.addEventListener("click", handleClick);
 });
 
-let clickCount = 0;
-let noughtIds = [];
-let crossIds = [];
+document.getElementById('game-grid').addEventListener('click', function(event) {
+  const clickedTile = event.target.closest('.tile');
+  if (clickedTile) {
+    handleClick(event);
+  }
+});
 
 function handleClick(event) {
-  if (!gameActive) return;
+  if (!game.gameActive) return;
 
   const clickedTile = event.target.closest(".tile");
 
-  if (clickCount % 2 && clickedTile.innerHTML === "") {
+  if (game.clickCount % 2 && clickedTile.innerHTML === "") {
     clickedTile.insertAdjacentHTML("beforeend", nought);
     clickedTile.classList.add("tile-nought");
-    noughtid = clickedTile.id.replace(/\D/g, "");
-    noughtIds.push(noughtid);
+    const noughtId = clickedTile.id.replace(/\D/g, "");
+    game.noughtIds.push(noughtId);
+
   } else if (clickedTile.innerHTML === "") {
     clickedTile.insertAdjacentHTML("beforeend", cross);
     clickedTile.classList.add("tile-cross");
-    crossid = clickedTile.id.replace(/\D/g, "");
-    crossIds.push(crossid);
+    const crossId = clickedTile.id.replace(/\D/g, "");
+    game.crossIds.push(crossId);
   }
 
   winCheck();
 
-  clickCount++;
+  game.clickCount++;
 }
 
 const winArrays = [
@@ -69,30 +80,26 @@ function winCheck() {
   for (let i = 0; i < winArrays.length; i++) {
     let winOption = winArrays[i];
 
-    //checks if each win option has all of the clicked nought id's in it
-    if (winOption.every((number) => noughtIds.includes(number))) {
+    if (winOption.every((number) => game.noughtIds.includes(number))) {
       youLose();
       linePlacer(winOption);
-      gameActive = false;
-    } else if (winOption.every((number) => crossIds.includes(number))) {
+      game.gameActive = false;
+    } else if (winOption.every((number) => game.crossIds.includes(number))) {
       youWin();
       linePlacer(winOption);
-      gameActive = false;
+      game.gameActive = false;
     }
   }
 }
 
-let winCount = 0;
-let lossCount = 0;
-
 function youWin() {
-  winCount++;
-  document.getElementById("win-count").textContent = winCount;
+  game.winCount++;
+  document.getElementById("win-count").textContent = game.winCount;
 }
 
 function youLose() {
-  lossCount++;
-  document.getElementById("loss-count").textContent = lossCount;
+  game.lossCount++;
+  document.getElementById("loss-count").textContent = game.lossCount;
 }
 
 function linePlacer(winIds) {
@@ -100,7 +107,7 @@ function linePlacer(winIds) {
     let winOption = winArrays[i];
 
     if (winOption.every((number) => winIds.includes(number))) {
-      const grid = document.querySelector(".grid");
+      const grid = document.getElementById("game-grid");
       grid.insertAdjacentHTML("beforeend", "<hr id='hr-" + i + "'>");
     }
   }
