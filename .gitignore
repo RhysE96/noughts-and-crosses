@@ -1,0 +1,5 @@
+# Ignore log files
+*.log
+
+# Ignore workspace file
+noughts and crosses.code-workspace
